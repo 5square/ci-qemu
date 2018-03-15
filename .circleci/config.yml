@@ -10,12 +10,15 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker build --cache-from=$CIRCLE_PROJECT_REPONAME \
+            docker build \
               --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
               --build-arg VERSION=${CIRCLE_TAG} \
               --build-arg VCS_URL=${CIRCLE_REPOSITORY_URL} \
               --build-arg VCS_REF=${CIRCLE_SHA1} \
-              -t ${DOCKER_IMAGE_NAMESPACE}/$CIRCLE_PROJECT_REPONAME:${CIRCLE_TAG}-arm-base
+              --build-arg BASE_IMAGE_NAMESPACE=arm32v6/ \
+              --build-arg BASE_IMAGE=alpine \
+              --build-arg BASE_IMAGE_TAG="3.7" \
+              -t ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}-arm-base .
       - run:
           name: Login to Docker Hub
           command: |
@@ -23,9 +26,9 @@ jobs:
       - run:
           name: Tag Image and Push
           command: |
-            docker push ${DOCKER_IMAGE_NAMESPACE}/$CIRCLE_PROJECT_REPONAME:${CIRCLE_TAG}-arm-base
-            docker tag ${DOCKER_IMAGE_NAMESPACE}/$CIRCLE_PROJECT_REPONAME:${CIRCLE_TAG}-arm-base ${DOCKER_IMAGE_NAMESPACE}/$CIRCLE_PROJECT_REPONAME:latest-arm-base
-            docker push ${DOCKER_IMAGE_NAMESPACE}/$CIRCLE_PROJECT_REPONAME:latest-arm-base
+            docker push ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}-arm-base
+            docker tag ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}-arm-base ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:3.7-arm-base
+            docker push ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:3.7-arm-base
   build-arm-node-qemu-image:
     working_directory: /app
     docker:
@@ -36,15 +39,15 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker build --cache-from=$CIRCLE_PROJECT_REPONAME \
+            docker build \
               --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
               --build-arg VERSION=${CIRCLE_TAG} \
               --build-arg VCS_URL=${CIRCLE_REPOSITORY_URL} \
               --build-arg VCS_REF=${CIRCLE_SHA1} \
               --build-arg BASE_IMAGE_NAMESPACE=arm32v6/ \
               --build-arg BASE_IMAGE=node \
-              --build-arg BASE_IMAGE_TAG="8.10-alpine"
-              -t ${DOCKER_IMAGE_NAMESPACE}/$CIRCLE_PROJECT_REPONAME:${CIRCLE_TAG}-arm-node
+              --build-arg BASE_IMAGE_TAG="8.10-alpine" \
+              -t ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}-arm-node .
       - run:
           name: Login to Docker Hub
           command: |
@@ -52,9 +55,9 @@ jobs:
       - run:
           name: Tag Image and Push
           command: |
-            docker push ${DOCKER_IMAGE_NAMESPACE}/$CIRCLE_PROJECT_REPONAME:${CIRCLE_TAG}-arm-node
-            docker tag ${DOCKER_IMAGE_NAMESPACE}/$CIRCLE_PROJECT_REPONAME:${CIRCLE_TAG}-arm-node ${DOCKER_IMAGE_NAMESPACE}/$CIRCLE_PROJECT_REPONAME:latest-arm-node
-            docker push ${DOCKER_IMAGE_NAMESPACE}/$CIRCLE_PROJECT_REPONAME:latest-arm-node
+            docker push ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}-arm-node
+            docker tag ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG}-arm-node ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:8.10-alpine-arm-node
+            docker push ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:8.10-alpine-arm-node
 
 workflows:
   version: 2

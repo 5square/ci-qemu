@@ -1,9 +1,9 @@
 #-------------------------------------------------------------------------------
 # Base Image Spec
 #-------------------------------------------------------------------------------
-ARG BASE_IMAGE=alpine
-ARG BASE_IMAGE_TAG=3.7
-ARG BASE_IMAGE_NAMESPACE=arm32v6/
+ARG BASE_IMAGE=
+ARG BASE_IMAGE_TAG=
+ARG BASE_IMAGE_NAMESPACE=
 
 FROM ${BASE_IMAGE_NAMESPACE}${BASE_IMAGE}:${BASE_IMAGE_TAG}
 
