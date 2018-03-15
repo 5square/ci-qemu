@@ -46,7 +46,7 @@ jobs:
               --build-arg VCS_REF=${CIRCLE_SHA1} \
               --build-arg BASE_IMAGE_NAMESPACE=arm32v6/ \
               --build-arg BASE_IMAGE=node \
-              --build-arg BASE_IMAGE_TAG="8.10-alpine" \
+              --build-arg BASE_IMAGE_TAG="8.9-alpine" \
               -t ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-arm-node .
       - run:
           name: Login to Docker Hub
@@ -56,8 +56,8 @@ jobs:
           name: Tag Image and Push
           command: |
             docker push ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-arm-node
-            docker tag ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-arm-node ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:8.10-alpine-arm-node
-            docker push ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:8.10-alpine-arm-node
+            docker tag ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-arm-node ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:8.9-alpine-arm-node
+            docker push ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:8.9-alpine-arm-node
 
 workflows:
   version: 2
