@@ -111,7 +111,12 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - build-arm-openjdk-qemu-image:
+          filters:
+            tags:
+              only: /.*/
       - post-deploy:
           requires:
             - build-arm-base-qemu-image
             - build-arm-node-qemu-image
+            - build-arm-openjdk-qemu-image
