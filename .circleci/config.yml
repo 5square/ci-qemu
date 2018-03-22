@@ -147,5 +147,6 @@ workflows:
       - post-deploy:
           requires:
             - build-arm-base-qemu-image
+            - build-arm-raspian-qemu-image
             - build-arm-node-qemu-image
             - build-arm-openjdk-qemu-image
