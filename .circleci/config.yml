@@ -136,6 +136,10 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - build-arm-raspian-qemu-image:
+          filters:
+            tags:
+              only: /.*/
       - build-arm-node-qemu-image:
           filters:
             tags:
