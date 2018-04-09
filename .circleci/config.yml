@@ -115,7 +115,7 @@ jobs:
           command: |
             docker push ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-arm-php
             docker tag ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-arm-php ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:7.2-alpine-arm-php
-            docker push ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:8.9-alpine-arm-php
+            docker push ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:7.2-alpine-arm-php
   build-arm-openjdk-qemu-image:
     working_directory: /app
     docker:
