@@ -173,6 +173,10 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - build-arm-php-qemu-image:
+          filters:
+            tags:
+              only: /.*/
       - build-arm-openjdk-qemu-image:
           filters:
             tags:
@@ -182,4 +186,5 @@ workflows:
             - build-arm-base-qemu-image
             - build-arm-raspian-qemu-image
             - build-arm-node-qemu-image
+            - build-arm-php-qemu-image
             - build-arm-openjdk-qemu-image
