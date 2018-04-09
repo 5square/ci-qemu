@@ -9,8 +9,7 @@ FROM ${BASE_IMAGE_NAMESPACE}${BASE_IMAGE}:${BASE_IMAGE_TAG}
 
 ENV QEMU_EXECVE 1
 
-COPY qemu-arm-static /usr/bin
-COPY resin-xbuild /usr/bin
+COPY image_files .
 
 RUN [ "/usr/bin/qemu-arm-static", "/bin/sh", "-c", "ln -s /usr/bin/resin-xbuild /usr/bin/cross-build-start; ln -s /usr/bin/resin-xbuild /usr/bin/cross-build-end; ln /bin/sh /bin/sh.real" ]
 
