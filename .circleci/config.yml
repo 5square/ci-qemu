@@ -145,18 +145,6 @@ jobs:
             docker push ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-arm-openjdk
             docker tag ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}-arm-openjdk ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:8-jre-alpine3.7-arm-openjdk
             docker push ${DOCKER_IMAGE_NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:8-jre-alpine3.7-arm-openjdk
-  post-deploy:
-    working_directory: /app
-    docker:
-      - image: docker:17.12.0-ce-git
-    steps:
-      - setup_remote_docker
-      - run:
-          name: Update Micro Badger
-          command: |
-            set +o pipefail
-            apk add --no-cache curl curl-dev
-            curl -X POST $MICROBADGER_WEBHOOK
 workflows:
   version: 2
   build:
@@ -181,10 +169,3 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - post-deploy:
-          requires:
-            - build-arm-base-qemu-image
-            - build-arm-raspian-qemu-image
-            - build-arm-node-qemu-image
-            - build-arm-php-qemu-image
-            - build-arm-openjdk-qemu-image
